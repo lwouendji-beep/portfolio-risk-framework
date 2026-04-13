@@ -29,7 +29,7 @@ Gold                     Gold  0.0007617096 0.010817160
 
 ### Correlation and diversification analysis.
 
-The Correlation matrix highlighted an existing correlation between the asset, but a quasi-null correlation between the European Bond and TotalEnergies. Having assets in a portfolio with low to nil correlation is beneficial to build resilience during shock events.
+The Correlation matrix highlighted an existing correlation between the assets, but a quasi-null correlation between the European Bond and TotalEnergies. Having assets in a portfolio with low to nil correlation is beneficial to build resilience during shock events.
 
 
 ![](CorrelationMatrix.png)<!-- -->
@@ -38,13 +38,14 @@ I then calculated the historical and parametric VaR(95%) and the Expected Shortf
 
 
             Portfolio
-   HistVaR -0.01190464
-   ParaVaR -0.01186999
-   ES      -0.01753287 
+    HistVaR -0.01190464
+    ParaVaR -0.01186999
+    ES      -0.01753287 
 
 I plotted a Proxy Risk contribution per Asset, which showed the disproportionate risk associated with the Total shares. This is as expected, based on teh assets volatility.
 
 ![](RiskPerAsset.png)<!-- -->
+
 
 ### Stress Test
 
@@ -57,29 +58,44 @@ The impact of these shock on each asset was speculative, while set to be economi
 Portfolio Impact was calculated, showing a larger impact from Equity crash
 
      Scenario TotalEnergies EuroStoxx50 EuroGovBond  Gold
-1 Equity Crash         -0.15       -0.20        0.03  0.08
-2   Rate Shock         -0.03       -0.05       -0.06 -0.02
-3  Energy Drop         -0.20       -0.08        0.01  0.04
+    1 Equity Crash         -0.15       -0.20        0.03  0.08
+    2   Rate Shock         -0.03       -0.05       -0.06 -0.02
+    3  Energy Drop         -0.20       -0.08        0.01  0.04
 
-  PortfolioImpact
-1         -0.0600
-2         -0.0400
-3         -0.0575
+    PortfolioImpact
+    1         -0.0600
+    2         -0.0400
+    3         -0.0575
 
 ### Portfolio Re-balancing
 
 I decided to adjust the assets weight in the portfolio, specifically by reducing Total's portfolio share from 25% to 10% and reallocating to bonds and gold.
 
 I potted the updated risk profile, showing that Gold now bears the highest risk, while begin the most stable asset. 
-This set up is more resilient to market shock, and thsi can be seen in the VaR comparison below. 
+This set up is more resilient to market shock, and this can be seen in the VaR comparison below. 
 
 ![](RebalancedRisk.png)<!-- -->
 
 
-I then recalculated the historical VaR for the original and re-balanced portfolio.
 
-               Metric    Original   Rebalanced
-1  Historical VaR 95% -0.01190464 -0.009462382
-2 Historical CVaR 95% -0.01753287 -0.013884195
+###Summary of Key Findings
+  
+  Under the original asset allocation, the historical and parametric VaR (95%) were estimated at around 1.2%, but the Expected Shortfall highlights a risk up to 1.75% 
+  The Rolling historical VaR graph highlights extreme events between 2022 and 2023 where the portfolio VaR remained below 1.2% for an extended period and even dropped as far as -2.2%
+  This really highlights the limitations of the VaR.
+  
+![](RollingVaR.png)<!-- -->
 
+  The re-allocation of the risk related to the Total shares to the bond and Gold results in 24bps reduction in historical VaR and 36 bps.
+    
+      Metric    Original   Rebalanced
+    1  Historical VaR 95% -0.01190464 -0.009462382
+    2  Parametric VaR 95% -0.01186999 -0.009629586
+    3 Historical CVaR 95% -0.01753287 -0.013884195
+  
+The simulation above uses parametric VaR (gaussian), which isn't the best model to capture tail risk. 
 
+##Next Steps
+
+In the next iteration of this project, I will implement a "fat- tails" distribution such as Student to calibrate teh risk further.
+I could also enhance stress scenarios using historical or volatility-based calibration.

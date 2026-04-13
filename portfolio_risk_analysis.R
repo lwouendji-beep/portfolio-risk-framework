@@ -144,13 +144,16 @@ colnames(new_portfolio_returns) <- "RebalancedPortfolio"
 old_hist_var <- VaR(portfolio_returns, p = 0.95, method = "historical")
 new_hist_var <- VaR(new_portfolio_returns, p = 0.95, method = "historical")
 
+old_param_var <- VaR(portfolio_returns, p = 0.95, method = "gaussian")
+new_param_var <- VaR(new_portfolio_returns, p = 0.95, method = "gaussian")
+
 old_hist_cvar <- ES(portfolio_returns, p = 0.95, method = "historical")
 new_hist_cvar <- ES(new_portfolio_returns, p = 0.95, method = "historical")
 
 comparison <- data.frame(
-  Metric = c("Historical VaR 95%", "Historical CVaR 95%"),
-  Original = c(as.numeric(old_hist_var), as.numeric(old_hist_cvar)),
-  Rebalanced = c(as.numeric(new_hist_var), as.numeric(new_hist_cvar))
+  Metric = c("Historical VaR 95%", "Parametric VaR 95%","Historical CVaR 95%"),
+  Original = c(as.numeric(old_hist_var), as.numeric(old_param_var),as.numeric(old_hist_cvar)),
+  Rebalanced = c(as.numeric(new_hist_var), as.numeric(new_param_var), as.numeric(new_hist_cvar))
 )
 
 # Simple risk contribution proxy using volatility contribution
@@ -175,3 +178,5 @@ cat("Original Historical VaR (95%):", round(as.numeric(old_hist_var), 4), "\n")
 cat("Rebalanced Historical VaR (95%):", round(as.numeric(new_hist_var), 4), "\n")
 cat("Original Historical CVaR (95%):", round(as.numeric(old_hist_cvar), 4), "\n")
 cat("Rebalanced Historical CVaR (95%):", round(as.numeric(new_hist_cvar), 4), "\n")
+cat("Original Parametric VaR (95%):", round(as.numeric(old_param_var), 4), "\n")
+cat("Rebalanced Parametric VaR (95%):", round(as.numeric(new_param_var), 4), "\n")
