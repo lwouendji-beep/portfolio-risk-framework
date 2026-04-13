@@ -21,10 +21,10 @@ Assets were selected to offer a broad risk exposure and were assumed to have equ
 I imported daily log returns from market data on  yahoo Finance using the "get" function from tidyverse. Removed missing values then calculated the assets mean and volatility over the period.
 
                         Asset          Mean  Volatility
-TotalEnergies   TotalEnergies  0.0007211235 0.016139195
-UBSEuroStoxx50 UBSEuroStoxx50  0.0005361828 0.010667659
-EuroGovBond       EuroGovBond -0.0001008505 0.003929694
-Gold                     Gold  0.0007617096 0.010817160
+    TotalEnergies   TotalEnergies  0.0007211235 0.016139195
+    UBSEuroStoxx50 UBSEuroStoxx50  0.0005361828 0.010667659
+    EuroGovBond       EuroGovBond -0.0001008505 0.003929694
+    Gold                     Gold  0.0007617096 0.010817160
 
 
 ### Correlation and diversification analysis.
@@ -78,7 +78,7 @@ This set up is more resilient to market shock, and this can be seen in the VaR c
 
 
 
-###Summary of Key Findings
+### Summary of Key Findings
   
   Under the original asset allocation, the historical and parametric VaR (95%) were estimated at around 1.2%, but the Expected Shortfall highlights a risk up to 1.75% 
   The Rolling historical VaR graph highlights extreme events between 2022 and 2023 where the portfolio VaR remained below 1.2% for an extended period and even dropped as far as -2.2%
@@ -95,7 +95,7 @@ This set up is more resilient to market shock, and this can be seen in the VaR c
   
 The simulation above uses parametric VaR (gaussian), which isn't the best model to capture tail risk. 
 
-##Next Steps
+## Next Steps
 
 In the next iteration of this project, I will implement a "fat- tails" distribution such as Student to calibrate teh risk further.
 I could also enhance stress scenarios using historical or volatility-based calibration.
