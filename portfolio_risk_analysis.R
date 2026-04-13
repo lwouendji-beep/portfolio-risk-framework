@@ -17,7 +17,7 @@ library(ggplot2)
 library(tidyr)
 
 # ---- 2. Download price data ----
-# Yahoo tickers can vary, so check these if needed
+# Yahoo tickers import
 tickers <- c("TTE", "UIM1.AS", "IEGA.AS", "GLD")
 
 start_date <- as.Date("2021-01-01")
