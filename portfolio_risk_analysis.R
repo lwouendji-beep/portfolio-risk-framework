@@ -153,6 +153,21 @@ comparison <- data.frame(
   Rebalanced = c(as.numeric(new_hist_var), as.numeric(new_hist_cvar))
 )
 
+# Simple risk contribution proxy using volatility contribution
+asset_vol <- apply(returns, 2, sd)
+risk_contrib_proxy <- new_weights * asset_vol
+risk_contrib_df <- data.frame(
+  Asset = names(risk_contrib_proxy),
+  Contribution = risk_contrib_proxy / sum(risk_contrib_proxy)
+)
+
+ggplot(risk_contrib_df, aes(x = Asset, y = Contribution, fill = Asset)) +
+  geom_col() +
+  theme_minimal() +
+  labs(title = "Proxy Risk Contribution by Asset", y = "Share of Risk", x = "")
+
+
+
 print(comparison)
 
 # ---- 13. Key takeaway printout ----
