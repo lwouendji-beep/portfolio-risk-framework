@@ -20,11 +20,11 @@ Assets were selected to offer a broad risk exposure and were assumed to have equ
 ## Methodology
 I imported daily log returns from market data on  yahoo Finance using the "get" function from tidyverse. Removed missing values then calculated the assets mean and volatility over the period.
 
-                        Asset          Mean  Volatility
-    TotalEnergies   TotalEnergies  0.0007211235 0.016139195
-    UBSEuroStoxx50 UBSEuroStoxx50  0.0005361828 0.010667659
-    EuroGovBond       EuroGovBond -0.0001008505 0.003929694
-    Gold                     Gold  0.0007617096 0.010817160
+    Asset           Mean          Volatility
+    TotalEnergies   0.0007211235  0.016139195
+    UBSEuroStoxx50  0.0005361828  0.010667659
+    EuroGovBond     -0.0001008505 0.003929694
+    Gold            0.0007617096  0.010817160
 
 
 ### Correlation and diversification analysis.
