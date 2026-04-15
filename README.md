@@ -44,7 +44,7 @@ The portfolio historical and parametric VaR(95%) were calculated, alongside the 
     ParaVaR   -0.01186999
     ES        -0.01753287 
 
-The Rolling VaR plot confirms losses up to 2.2% during the period between 2022 and 2023, highlighting the clear limitations of the VaR.
+The Rolling VaR plot confirms losses up to -2.2% during the period between 2022 and 2023, highlighting the clear limitations of the VaR.
 
 ![](output/RollingVaR.png)<!-- -->
 
@@ -84,10 +84,11 @@ The new risk profile now shows Gold represents a larger share of portfolio risk 
 ![](output/RebalancedRisk.png)<!-- -->
 
 The rebalanced portfolio demonstrates improved resilience under stress conditions. 
-      Metric    			Original   Rebalanced
-    1  Historical VaR 95% -0.01190464 -0.009462382
-    2  Parametric VaR 95% -0.01186999 -0.009629586
-    3 Historical CVaR 95% -0.01753287 -0.013884195
+
+            Metric    			  Original    Rebalanced
+    1  Historical VaR 95%   -0.01190464   -0.009462382
+    2  Parametric VaR 95%   -0.01186999   -0.009629586
+    3 Historical CVaR 95%   -0.01753287   -0.013884195
 
 ### Summary of Key Findings
   
