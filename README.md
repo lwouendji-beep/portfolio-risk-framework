@@ -1,16 +1,16 @@
 ## README
 
-Portfolio Risk Framework Simulation - Var and Stress Testing
+Portfolio Risk Framework: VaR, Expected Shortfall, and Stress Testing in R
 ============================
 Laetitia Wouendji
 April 2026
 
 ## Overview
-*This project develops a portfolio risk framework in R to quantify downside risk and support allocation decisions. The model applies Value at Risk (VaR), Conditional VaR (CVaR), and stress testing to a multi-asset portfolio.*
+*This project develops an R-based portfolio risk framework to assess downside exposure and support allocation decisions. The analysis applies historical and parametric VaR, Expected Shortfall, correlation analysis, and scenario-based stress testing to a four-asset portfolio.*
 
 ## Portfolio Composition
 
-Assets were selected to offer a broad risk exposure and were assumed to have equall weight within the portfolio:
+Assets were selected to offer a broad risk exposure and were assumed to have equal weight within the portfolio:
 
 1. TotalEnergies (Energy exposure)
 2. Euro Stoxx ETF (Equity market)
@@ -18,7 +18,9 @@ Assets were selected to offer a broad risk exposure and were assumed to have equ
 4. Gold (Defensive asset)
 
 ## Methodology
-I imported daily log returns from market data on  yahoo Finance using the "get" function from tidyverse. Removed missing values then calculated the assets mean and volatility over the period.
+
+Daily log returns were imported from market data on Yahoo Finance. 
+Missing values were removed to ensure consistent estimation of return and volatility metrics.
 
     Asset           Mean          Volatility
     TotalEnergies   0.0007211235  0.016139195
@@ -29,73 +31,76 @@ I imported daily log returns from market data on  yahoo Finance using the "get" 
 
 ### Correlation and diversification analysis.
 
-The Correlation matrix highlighted an existing correlation between the assets, but a quasi-null correlation between the European Bond and TotalEnergies. Having assets in a portfolio with low to nil correlation is beneficial to build resilience during shock events.
+The Correlation matrix highlights an existing correlation between the assets, but a low or near-zero correlation between the European Bond and TotalEnergies. Having assets in a portfolio with low to nil correlation is beneficial to build resilience during shock events.
 
 
-![](CorrelationMatrix.png)<!-- -->
-
-I then calculated the historical and parametric VaR(95%) and the Expected Shortfall for the portfolio to highlight the real amplitude of the risk, should the event happen.
+![](output/CorrelationMatrix.png)<!-- -->
 
 
-            Portfolio
-    HistVaR -0.01190464
-    ParaVaR -0.01186999
-    ES      -0.01753287 
+The portfolio historical and parametric VaR(95%) were calculated, alongside the Expected Shortfall  to highlight the real amplitude of the risk, should the event happen.
 
-I plotted a Proxy Risk contribution per Asset, which showed the disproportionate risk associated with the Total shares. This is as expected, based on teh assets volatility.
+              Portfolio
+    HistVaR   -0.01190464
+    ParaVaR   -0.01186999
+    ES        -0.01753287 
 
-![](RiskPerAsset.png)<!-- -->
+The Rolling VaR plot confirms losses up to 2.2% during the period between 2022 and 2023, highlighting the clear limitations of the VaR.
+
+![](output/RollingVaR.png)<!-- -->
 
 
-### Stress Test
+## Stress Test
 
-I put the portfolio through a series of stress events focusing on 3 key market shocks: 
+A Proxy Risk contribution per Asset plot shows the disproportionate risk associated with the Total shares in the scenario where all assets have equal weight. This is as expected, based on the assets’ volatility.
+
+![](output/RiskPerAsset.png)<!-- -->
+
+The portfolio is subjected to three macro stress scenarios: 
   - Equity market crash
   - Interest Rate Shock
   - Energy price drop
   
-The impact of these shock on each asset was speculative, while set to be economically coherent.
-Portfolio Impact was calculated, showing a larger impact from Equity crash
+The impact of these shocks on each asset was speculative, while set to be economically coherent. 
+Stress losses (4–6%) significantly exceed VaR estimates (~1.2%), highlighting the limitations of standard risk measures under extreme market conditions.
 
-     Scenario TotalEnergies EuroStoxx50 EuroGovBond  Gold
+        Scenario    TotalEnergies EuroStoxx50 EuroGovBond  Gold
     1 Equity Crash         -0.15       -0.20        0.03  0.08
     2   Rate Shock         -0.03       -0.05       -0.06 -0.02
     3  Energy Drop         -0.20       -0.08        0.01  0.04
 
-    PortfolioImpact
+
+          PortfolioImpact
     1         -0.0600
     2         -0.0400
     3         -0.0575
 
+
 ### Portfolio Re-balancing
 
-I decided to adjust the assets weight in the portfolio, specifically by reducing Total's portfolio share from 25% to 10% and reallocating to bonds and gold.
+The portfolio is rebalanced by reducing Total's portfolio share from 25% to 10% and reallocating to bonds and gold.
 
-I potted the updated risk profile, showing that Gold now bears the highest risk, while begin the most stable asset. 
-This set up is more resilient to market shock, and this can be seen in the VaR comparison below. 
+The new risk profile now shows Gold represents a larger share of portfolio risk after rebalancing, reflecting its increased weight and diversification role.
 
-![](RebalancedRisk.png)<!-- -->
+![](output/RebalancedRisk.png)<!-- -->
 
-
-
-### Summary of Key Findings
-  
-  Under the original asset allocation, the historical and parametric VaR (95%) were estimated at around 1.2%, but the Expected Shortfall highlights a risk up to 1.75% 
-  The Rolling historical VaR graph highlights extreme events between 2022 and 2023 where the portfolio VaR remained below 1.2% for an extended period and even dropped as far as -2.2%
-  This really highlights the limitations of the VaR.
-  
-![](RollingVaR.png)<!-- -->
-
-  The re-allocation of the risk related to the Total shares to the bond and Gold results in 24bps reduction in historical VaR and 36 bps.
-    
-      Metric    Original   Rebalanced
+The rebalanced portfolio demonstrates improved resilience under stress conditions. 
+      Metric    			Original   Rebalanced
     1  Historical VaR 95% -0.01190464 -0.009462382
     2  Parametric VaR 95% -0.01186999 -0.009629586
     3 Historical CVaR 95% -0.01753287 -0.013884195
+
+### Summary of Key Findings
   
-The simulation above uses parametric VaR (gaussian), which isn't the best model to capture tail risk. 
+- Daily historical VaR (95%): 1.19% 
+- Daily Expected Shortfall (95%): 1.75%, indicating tail losses materially beyond VaR 
+- Stress losses of 4.0% to 6.0% significantly exceed VaR estimates, highlighting model limitations under extreme events 
+- Reallocating away from TotalEnergies toward bonds and gold reduced historical VaR and CVaR, improving portfolio resilience  
+
+### Investment Interpretation
+
+The results suggest downside risk is concentrated in equity and energy exposures. Under severe macro shocks, diversification benefits weaken and losses exceed normal-distribution-based risk estimates. A more defensive allocation improves resilience but may reduce upside participation.
 
 ## Next Steps
 
-In the next iteration of this project, I will implement a "fat- tails" distribution such as Student to calibrate teh risk further.
+In the next iteration of this project, I will implement a "fat- tails" distribution such as Student to calibrate the risk further.
 I could also enhance stress scenarios using historical or volatility-based calibration.
